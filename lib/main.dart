@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_app/model/models.dart';
 import 'package:food_app/ui/pages.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 

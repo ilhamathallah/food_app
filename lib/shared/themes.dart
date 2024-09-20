@@ -12,9 +12,9 @@ TextStyle blackFonStyle1 = GoogleFonts.poppins().copyWith(
     fontWeight: FontWeight.w500);
 TextStyle blackFonStyle2 = GoogleFonts.poppins().copyWith(
     color: Colors.black,
-    fontSize: 16,
-    fontWeight: FontWeight.w800);
+    fontSize: 15,
+    fontWeight: FontWeight.w700);
 TextStyle blackFonStyle3 = GoogleFonts.poppins().copyWith(
-    color: Colors.white,
-    fontSize: 12,
+    color: Colors.black,
+    fontSize: 14,
     fontWeight: FontWeight.w300);

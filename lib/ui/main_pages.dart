@@ -35,15 +35,11 @@ class _MainPagesState extends State<MainPages> {
                   child: FoodPage(),
                 ),
                 Center(
-                    child: Text(
-                  'screen 2',
-                  style: blackFonStyle1,
-                )),
+                    child: OrderHistoryPage(),
+                ),
                 Center(
-                    child: Text(
-                  'screen 3',
-                  style: blackFonStyle1,
-                )),
+                    child: ProfilePage(),
+                ),
               ],
             ),
           ),
