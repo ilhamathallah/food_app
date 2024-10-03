@@ -9,31 +9,23 @@ class OrderHistoryPage extends StatefulWidget {
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
   int selectedIndex = 0;
-  List<Transaction> inProgres = mockTransaction
-      .where((e) =>
-          e.status == TransactionStatus.on_delivery ||
-          e.status == TransactionStatus.pending)
-      .toList();
-  List<Transaction> past = mockTransaction
-      .where((e) =>
-          e.status == TransactionStatus.canceled ||
-          e.status == TransactionStatus.delivered)
-      .toList();
 
   @override
-
   Widget build(BuildContext context) {
-
-    double ListItemWidth = MediaQuery.of(context).size.width - 2 * defaultMargin;
-
-    return (inProgres.length == 0 && past.length == 0)
-        ? IllustrationPage(
+    return BlocBuilder<TransactionCubit, TransactionState>(builder: (_, state) {
+      if (state is TransactionLoaded) {
+        if (state.transaction.length == 0) {
+          return IllustrationPage(
             title: 'Ouch! Hungry',
             subtitle: 'Seems like you have not\nordered any food yet',
             picturePath: 'assets/food_wishes.png',
             buttonTitle1: 'find food',
-            buttonTap1: () {})
-        : ListView(
+            buttonTap1: () {},
+          );
+        } else {
+          double ListItemWidth =
+              MediaQuery.of(context).size.width - 2 * defaultMargin;
+          return ListView(
             children: [
               Container(
                 color: Colors.white,
@@ -55,7 +47,6 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                   ],
                 ),
               ),
-
               Container(
                 width: double.infinity,
                 color: Colors.white,
@@ -70,24 +61,42 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                         });
                       },
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 16,
                     ),
-                    Column(
-                      children: (selectedIndex == 0 ? inProgres : past)
-                          .map((e) => Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: OrderListItem(
-                                    transaction: e,
-                                  itemWidth: ListItemWidth,
-                                ),
-                              ))
-                          .toList(),
-                    )
+                    Builder(builder: (_){
+                      List<Transaction> transactions = (selectedIndex == 0
+                          ? state.transaction
+                          .where((e) => e.status == TransactionStatus.on_delivery ||
+                          e.status == TransactionStatus.pending)
+                          .toList()
+                          : state.transaction
+                          .where((e) => e.status == TransactionStatus.canceled ||
+                          e.status == TransactionStatus.delivered)
+                          .toList());
+                      return Column(
+                        children: transactions
+                            .map((e) => Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: OrderListItem(
+                            transaction: e,
+                            itemWidth: ListItemWidth,
+                          ),
+                        ))
+                            .toList(),
+                      );
+                    })
                   ],
                 ),
               ),
             ],
           );
+        }
+      } else {
+        return Center(
+          child: loadingIndicator,
+        );
+      }
+    });
   }
 }

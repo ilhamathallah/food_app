@@ -189,7 +189,8 @@ class _DetailPageState extends State<DetailPage> {
                                   decimalDigits: 0,
                                   locale: 'id_ID')
                               .format(
-                            quantity * (widget.transaction?.food?.price?.toInt() ?? 0),
+                            quantity *
+                                (widget.transaction?.food?.price?.toInt() ?? 0),
                           ))
                         ],
                       ),
@@ -204,7 +205,15 @@ class _DetailPageState extends State<DetailPage> {
                               backgroundColor: mainColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15))),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(PaymentPage(
+                                transaction: widget.transaction!.copyWith(
+                                    quantity: quantity,
+                                    total: quantity *
+                                        (widget.transaction?.food?.price
+                                                ?.toInt() ??
+                                            0))));
+                          },
                           child: Text(
                             'Order Now',
                             style: blackFonStyle3.copyWith(

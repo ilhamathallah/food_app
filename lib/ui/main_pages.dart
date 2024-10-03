@@ -1,7 +1,9 @@
 part of 'pages.dart';
 
 class MainPages extends StatefulWidget {
-  const MainPages({super.key});
+  const MainPages({super.key, this.initialPage = 0});
+
+  final int initialPage;
 
   @override
   State<MainPages> createState() => _MainPagesState();
@@ -9,6 +11,14 @@ class MainPages extends StatefulWidget {
 
 class _MainPagesState extends State<MainPages> {
   int selectedPage = 0;
+
+  @override
+  void initState(){
+    super.initState();
+    selectedPage = widget.initialPage;
+    pageController = PageController(initialPage: widget.initialPage);
+  }
+
   PageController pageController = PageController(initialPage: 0);
 
   @override
@@ -51,7 +61,7 @@ class _MainPagesState extends State<MainPages> {
                 setState(() {
                   selectedPage = index;
                 });
-                pageController.jumpToPage(index);
+                pageController.jumpToPage(selectedPage);
               },
             ),
           )

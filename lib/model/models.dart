@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:food_app/model/models.dart';
 
